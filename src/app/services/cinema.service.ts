@@ -1,0 +1,44 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CinemaService {
+
+  public host:string="http://localhost:8080"
+
+  constructor(private http:HttpClient) { }
+
+  public getVilles()
+  {
+    return this.http.get(this.host+"/villes")
+  }
+
+  getCinemas(v:any)
+  {
+   return this.http.get(v._links.cinemas.href);
+
+  }
+//tslint:disable-next-line:typedef
+  getSalles(c:any)
+  {
+    return this.http.get(c._links.salles.href);
+  }
+  //tslint:disable-next-line:typedef
+  getProjection(salle:any)
+  {
+    let url=salle._links.projections.href.replace("{?projection}","?projection=p1");
+    return this.http.get(url)
+  }
+
+  getTicketsPlaces(p:any)
+  {
+    let url=p._links.tickets.href.replace("{?projection}","");
+    return this.http.get(url+"?projection=ticketProj")
+  }
+
+  payerTickets(dataForm:any){
+    return this.http.post(this.host+"/payerTickets", dataForm);
+  }
+}

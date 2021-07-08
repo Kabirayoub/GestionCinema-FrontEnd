@@ -1,0 +1,1 @@
+Vous devez ajouter le fichier /cinema/images dans votre fichier d'utilisateur.
